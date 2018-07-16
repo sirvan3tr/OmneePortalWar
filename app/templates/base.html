@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+    <head>
+      {% if title %}
+      <title>{{ title }}</title>
+      {% else %}
+      <title></title>
+      {% endif %}
+    </head>
+    <body>
+        <h1>Warwick student records<h1>
+        <hr>
+        {% block content %}{% endblock %}
+    </body>
+</html>

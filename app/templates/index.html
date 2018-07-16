@@ -1,0 +1,68 @@
+
+{% extends "base.html" %}
+{% block content %}
+<h3>{{ loginJSON.name }}</h3>
+<input type="text" id="myuniqueid" />
+<button type="submit" id="mysubmit">Submit</button>
+
+{% if loginJSON.status == 0 %}
+<script type="text/javascript">
+    // Generate a random string, that will act as a unique ID for our URL
+    // currently not used -- maybe as a method to stop replay attack later
+    function createID() {
+        var text = "",
+            possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+        for (var i = 0; i < 20; i++) {
+          text += possible.charAt(Math.floor(Math.random() * possible.length));
+        }
+        return text;
+    }
+
+    var ws = new WebSocket("ws://127.0.0.1:5678/"),
+        messages = document.createElement('ul'),
+        submit = document.getElementById('mysubmit');
+
+    // currently not used
+    submit.onclick = function (event) {
+        myValue = document.getElementById('myuniqueid').value;
+        console.log(myValue);
+        ws.send(JSON.stringify({action: myValue}));
+    }
+
+    ws.onopen = function() {
+        console.log('Opened websocket');
+    };
+
+    sessionInfo = {'uID' : '', 'signature': ''};
+    ws.onmessage = function (event) {
+        var messages = document.getElementsByTagName('ul')[0],
+            message = document.createElement('li'),
+            content = document.createTextNode(event.data),
+            dataJSON = JSON.parse(event.data);
+
+        if (dataJSON['type'] == "uID") {
+            console.log('We have uID');
+            console.log(dataJSON['uID']);
+            sessionInfo['uID'] = dataJSON['uID'];
+        } else if(dataJSON['type'] == 'signature') {
+            console.log('We have signature');
+            console.log(dataJSON['signature']);
+            sessionInfo['signature'] = dataJSON['signature'];
+            console.log(sessionInfo);
+        }
+
+        console.log(event.data);
+        message.appendChild(content);
+        messages.appendChild(message);
+
+        if (sessionInfo['signature'] != '') {
+            endURL = sessionInfo['uID']+'/'+sessionInfo['signature'];
+            window.location.href = 'http://localhost:5000/login/'+endURL
+        }
+
+        //console.log(window.location.href = 'http://localhost:5000/login/'+event.data;
+    };
+    document.body.appendChild(messages);
+</script>
+{% endif %}
+{% endblock %}
