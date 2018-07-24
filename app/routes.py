@@ -91,8 +91,8 @@ def index():
     return render_template('index.html', loginJSON = loginJSON)
 
 
-@app.route('/login/<msg>/<sig>', methods=['GET'])
-def login(msg, sig):
+@app.route('/login/confirm/<msg>/<sig>', methods=['GET'])
+def loginConfirm(msg, sig):
 
     msgHash = defunct_hash_message(text=msg)
 
@@ -104,3 +104,13 @@ def login(msg, sig):
     #return jsonify({'student': student[0]})
     session['omneeID'] = omneeID
     return 'hey just logged you in' + omneeID
+
+@app.route('/login', methods=['Get'])
+def login():
+    loginJSON = loginSession()
+    return render_template('login.html', loginJSON = loginJSON)
+
+@app.route('/logout', methods=['Get'])
+def logout():
+    session.pop('omneeID', None)
+    return redirect(url_for('index'))
