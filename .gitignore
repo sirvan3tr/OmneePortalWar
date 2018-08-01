@@ -1,3 +1,5 @@
+.vscode/
+.pyc
 venv/
 omneeWarPortal.code-workspace
 __pycache__/

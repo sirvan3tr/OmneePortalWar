@@ -14,3 +14,6 @@ To create venv in py3:
 virtualenv -p python3 venv
 
 export FLASK_APP=theapp.py
+
+From repo but not local:
+git rm --cached *.pyc
