@@ -4,6 +4,10 @@ import datetime
 import random, string, json
 
 sockets = {}
+serverIP = '127.0.0.1'
+serverPort =  5678
+print('Starting socket server....')
+print('Running on http://'+str(serverIP)+':'+str(serverPort))
 
 def uniqueID(size=12, chars=string.ascii_letters + string.digits):
     return ''.join(random.choice(chars) for _ in range(size))
@@ -12,6 +16,7 @@ async def sendUser(data):
     if sockets[data['host']]:
         sigJSON = json.dumps({'type': 'signature', 'signature': data['signature']})
         await sockets[data['host']].send(sigJSON)
+
 
 async def main(websocket, path):
     uID = uniqueID() # a unique id for connection
@@ -43,7 +48,7 @@ async def main(websocket, path):
     finally:
         del sockets[uID]
 
-start_server = websockets.serve(main, '127.0.0.1', 5678)
+start_server = websockets.serve(main, serverIP, serverPort)
 
 asyncio.get_event_loop().run_until_complete(start_server)
 asyncio.get_event_loop().run_forever()

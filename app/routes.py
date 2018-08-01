@@ -103,7 +103,8 @@ def loginConfirm(msg, sig):
         return omneeID
     #return jsonify({'student': student[0]})
     session['omneeID'] = omneeID
-    return 'hey just logged you in' + omneeID
+    htmlTxt = '<a href="/">Home</a>'
+    return 'You are now logged in: ' + omneeID + '<br />' + htmlTxt
 
 @app.route('/login', methods=['Get'])
 def login():

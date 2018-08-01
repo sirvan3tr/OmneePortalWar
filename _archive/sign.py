@@ -7,7 +7,7 @@ import asyncio
 import websockets
 
 # Acting like the mobile phone
-msg = 'v7OVFHG68NZM'
+msg = 'bmMfnO5HE2m2'
 pk = '0xb50c18d670e82f3f559142d63773b5f60882d337f7d40e78f87973484740ab0d'
 msgHash = defunct_hash_message(text=msg)
 
