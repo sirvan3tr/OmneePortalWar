@@ -18,8 +18,9 @@
         <a class="p-2 text-dark" href="/docs">Documentation</a>
         <a class="p-2 text-dark" href="/about">About</a>
         <a class="p-2 text-dark" href="/contact">Contact</a>
+        <a class="p-2 text-dark" href="/register">Register</a>
       </nav>
-
+      
       {% if loginJSON.status == 0 %}
       <a class="btn btn-outline-primary" href="/login">Login</a>
       {% endif %}
@@ -28,7 +29,9 @@
       <a class="btn btn-outline-primary" href="/logout">Logout</a>
       {% endif %}
 
-    </div>
+      </div>
+      <div class="container">
         {% block content %}{% endblock %}
+      </div>
     </body>
 </html>

@@ -90,12 +90,15 @@ def index():
     loginJSON = loginSession()
     return render_template('index.html', loginJSON = loginJSON)
 
+@app.route('/register', methods=['GET'])
+def register():
+    loginJSON = loginSession()
+    return render_template('register.html', loginJSON = loginJSON)
+
 
 @app.route('/login/confirm/<msg>/<sig>', methods=['GET'])
 def loginConfirm(msg, sig):
-
     msgHash = defunct_hash_message(text=msg)
-
     omneeID = w3.eth.account.recoverHash(msgHash, signature=sig)
 
     student = [student for student in students if student['omneeID'] == omneeID]
@@ -115,3 +118,8 @@ def login():
 def logout():
     session.pop('omneeID', None)
     return redirect(url_for('index'))
+
+@app.route('/profile', methods=['Get'])
+def myprofile():
+    loginJSON = loginSession()
+    return render_template('myprofile.html', loginJSON = loginJSON, tasks = tasks)
