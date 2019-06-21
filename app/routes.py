@@ -27,6 +27,7 @@ students = [
         'id': '1', # portal ID
         'omneeID' : '0x6751c5563A62675Ffba7D3220f883c719b7B9F49', # users omnee ID
 #0xb50c18d670e82f3f559142d63773b5f60882d337f7d40e78f87973484740ab0d
+
         'price' : '10', # 10 GBP
         'user' : {
             'first_name' : 'Sirvan',
@@ -122,4 +123,5 @@ def logout():
 @app.route('/profile', methods=['Get'])
 def myprofile():
     loginJSON = loginSession()
+    whoIs = session['omneeID']
     return render_template('myprofile.html', loginJSON = loginJSON, tasks = tasks)
